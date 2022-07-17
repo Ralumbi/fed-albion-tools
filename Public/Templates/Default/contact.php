@@ -1,26 +1,16 @@
 <?php
 
-$url1 = 'https://gameinfo.albiononline.com/api/gameinfo/guilds/uhmotNBAQ6-0vi9PFysRBg/members';
-$url2 = 'https://gameinfo.albiononline.com/api/gameinfo/guilds/DWkD4B0uSsGQoryrz8Nuwg/members';
-$url3 = 'https://gameinfo.albiononline.com/api/gameinfo/guilds/wSbCgimqTPy470n-wDQXPQ/members';
-$url4 = 'https://gameinfo.albiononline.com/api/gameinfo/guilds/nmc0HQW-TZirTlnGzwbF-w/members';
-$url5 = 'https://gameinfo.albiononline.com/api/gameinfo/guilds/WpV4yaVxSLW8QXH2Be40cA/members'; 
+$guilds = ['uhmotNBAQ6-0vi9PFysRBg', 'DWkD4B0uSsGQoryrz8Nuwg', 'wSbCgimqTPy470n-wDQXPQ', 'nmc0HQW-TZirTlnGzwbF-w', 'WpV4yaVxSLW8QXH2Be40cA'];
 
-$merged_urls = [$url1, $url2, $url3, $url4, $url5];
+foreach ($guilds as $guild) {
 
-$api_endpoint = [];
+ $result = file_get_contents("https://gameinfo.albiononline.com/api/gameinfo/guilds/$guild/members");
 
-foreach ($merged_urls as $urls) {
-    $api_endpoint[] = file_get_contents($urls);
+ $json = json_decode($result);
+
+ foreach ($json as $i) {
+  echo $i->Name,"<br>";
+ }
 }
 
-// Gives all DATA from all Guilds members
-// var_dump($api_endpoint);  
-
-$merged_arrays = array_merge(json_decode($api_endpoint[0], true), json_decode($api_endpoint[1], true), json_decode($api_endpoint[2], true), json_decode($api_endpoint[3], true), json_decode($api_endpoint[4], true));
-
-
-foreach ($merged_arrays as $query) {
-    echo $query['Name'];
-    echo '<br>';
-}
+?>
